@@ -1,0 +1,119 @@
+<!DOCTYPE aesl-source>
+<network>
+<event name="pair_run" size="1"/>
+<event name="debug_log" size="14"/>
+<node name="USB Serial Device" nodeId="{a4eb4ab4-f591-47b8-ac5e-b2acedbee453}"># variables for state
+var state[4] = [0,0,0,0]
+var new_state[4] = [0,0,0,0]
+
+# stop timer 0
+timer.period[0] = 0
+# reset outputs
+call sound.system(-1)
+call leds.top(0,0,0)
+call leds.bottom.left(0,0,0)
+call leds.bottom.right(0,0,0)
+call leds.circle(0,0,0,0,0,0,0,0)
+
+# subroutine to display the current state
+sub display_state
+	call leds.circle(0,state[1]*32,0,state[3]*32,0,state[2]*32,0,state[0]*32)
+
+onevent buttons
+	when button.forward == 1 do
+		motor.left.target = 300
+		motor.right.target = 500
+		new_state[0] = 1
+		emit pair_run 0
+		_emit debug_log [0, 0x4, 0xd871, 0, 0x10, 0, 0x1014, 0x1b]
+	end
+
+	call math.copy(state, new_state)
+	callsub display_state
+
+
+onevent prox
+	when prox.horizontal[0] &lt;= 1000 and prox.horizontal[1] &lt;= 1000 and prox.horizontal[2] &lt;= 1000 do
+		if state[0] == 1 then
+			motor.left.target = 100
+			motor.right.target = 150
+			emit pair_run 1
+			_emit debug_log [0x1, 0x3, 0x872, 0x2a00, 0x3e8, 0x7d0, 0x1b, 0xc0d]
+		end
+	end
+
+	when prox.horizontal[0] >= 1600 and prox.horizontal[1] >= 1600 and prox.horizontal[2] >= 1600 do
+		if state[0] == 1 then
+			motor.left.target = 200
+			motor.right.target = 0
+			emit pair_run 2
+			_emit debug_log [0x2, 0x3, 0x872, 0x1500, 0x2bc, 0x640, 0x1b, 0xe0a]
+		end
+	end
+
+	when prox.ground.delta[0] &lt;= 400 and prox.ground.delta[1] &lt;= 400 do
+		if state[0] == 1 then
+			motor.left.target = 200
+			motor.right.target = 250
+			timer.period[0] = 2500
+			new_state[0] = 0
+			new_state[1] = 1
+			emit pair_run 3
+			_emit debug_log [0x3, 0x5, 0xc873, 0xd0, 0xa, 0x190, 0x1c2, 0x1b, 0xe0f, 0x9c4, 0x3f]
+		end
+	end
+
+	call math.copy(state, new_state)
+	callsub display_state
+
+
+onevent timer0
+	timer.period[0] = 0
+	if state[1] == 1 then
+		motor.left.target = 0
+		motor.right.target = 0
+		emit pair_run 4
+		_emit debug_log [0x4, 0x3, 0x876, 0x9, 0xa0a]
+	end
+
+<toolsPlugins>
+<ThymioVisualProgramming>
+<vplroot xml-format-version="1">
+<program advanced_mode="1">
+<set>
+<block value4="0" value3="0" value5="0" value2="0" value1="0" name="button" value6="0" type="event" value0="1"/>
+<block value3="0" value2="0" value1="0" name="statefilter" type="state" value0="0"/>
+<block value1="500" name="move" type="action" value0="300"/>
+<block value3="0" value2="0" value1="0" name="setstate" type="action" value0="1"/>
+</set>
+<set>
+<block value4="0" value3="0" value5="0" value2="2" value1="2" name="prox" value7="1000" value6="0" type="event" value0="2" value8="2000"/>
+<block value3="0" value2="0" value1="0" name="statefilter" type="state" value0="1"/>
+<block value1="150" name="move" type="action" value0="100"/>
+</set>
+<set>
+<block value4="0" value3="0" value5="0" value2="1" value1="1" name="prox" value7="700" value6="0" type="event" value0="1" value8="1600"/>
+<block value3="0" value2="0" value1="0" name="statefilter" type="state" value0="1"/>
+<block value1="0" name="move" type="action" value0="200"/>
+</set>
+<set>
+<block value3="450" value2="400" value1="2" name="proxground" type="event" value0="2"/>
+<block value3="0" value2="0" value1="0" name="statefilter" type="state" value0="1"/>
+<block value1="250" name="move" type="action" value0="200"/>
+<block name="timer" type="action" value0="2500"/>
+<block value3="0" value2="0" value1="1" name="setstate" type="action" value0="2"/>
+</set>
+<set>
+<block name="timeout" type="event"/>
+<block value3="0" value2="0" value1="1" name="statefilter" type="state" value0="0"/>
+<block value1="0" name="move" type="action" value0="0"/>
+</set>
+<set>
+<block value3="0" value2="0" value1="0" name="statefilter" type="state" value0="0"/>
+</set>
+</program>
+</vplroot>
+</ThymioVisualProgramming>
+</toolsPlugins>
+</node>
+</network>
