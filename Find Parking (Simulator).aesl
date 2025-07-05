@@ -1,0 +1,68 @@
+<!DOCTYPE aesl-source>
+<network>
+<event name="pair_run" size="1"/>
+<event name="debug_log" size="14"/>
+<node nodeId="{a4eb4ab4-f591-47b8-ac5e-b2acedbee453}" name="USB Serial Device"><toolsPlugins>
+<ThymioVisualProgramming>
+<vplroot xml-format-version="1">
+<program advanced_mode="1">
+<set>
+<block value4="0" name="button" value2="0" value0="1" value6="0" value1="0" value5="0" value3="0" type="event"/>
+<block name="statefilter" value2="0" value0="0" value1="0" value3="0" type="state"/>
+<block name="move" value0="500" value1="500" type="action"/>
+<block name="setstate" value2="2" value0="1" value1="2" value3="2" type="action"/>
+</set>
+<set>
+<block value4="0" name="prox" value2="2" value8="2000" value0="2" value6="0" value1="2" value5="0" value3="0" type="event" value7="1000"/>
+<block name="statefilter" value2="2" value0="1" value1="2" value3="2" type="state"/>
+<block name="move" value0="100" value1="150" type="action"/>
+</set>
+<set>
+<block value4="0" name="prox" value2="1" value8="1800" value0="1" value6="0" value1="1" value5="0" value3="0" type="event" value7="700"/>
+<block name="statefilter" value2="2" value0="1" value1="2" value3="2" type="state"/>
+<block name="move" value0="300" value1="0" type="action"/>
+</set>
+<set>
+<block value4="0" name="prox" value2="0" value8="1800" value0="0" value6="0" value1="1" value5="0" value3="0" type="event" value7="1000"/>
+<block name="statefilter" value2="2" value0="1" value1="2" value3="0" type="state"/>
+<block name="move" value0="150" value1="0" type="action"/>
+</set>
+<set>
+<block value4="0" name="prox" value2="0" value8="1800" value0="1" value6="0" value1="0" value5="0" value3="0" type="event" value7="1000"/>
+<block name="statefilter" value2="2" value0="1" value1="2" value3="2" type="state"/>
+<block name="move" value0="200" value1="0" type="action"/>
+</set>
+<set>
+<block name="proxground" value2="400" value0="2" value1="2" value3="450" type="event"/>
+<block name="statefilter" value2="2" value0="1" value1="2" value3="2" type="state"/>
+<block name="move" value0="-100" value1="-300" type="action"/>
+<block name="timer" value0="1500" type="action"/>
+<block name="setstate" value2="2" value0="2" value1="1" value3="2" type="action"/>
+</set>
+<set>
+<block name="timeout" type="event"/>
+<block name="statefilter" value2="2" value0="2" value1="1" value3="2" type="state"/>
+<block name="move" value0="250" value1="500" type="action"/>
+<block name="setstate" value2="2" value0="2" value1="1" value3="1" type="action"/>
+</set>
+<set>
+<block value4="0" name="prox" value2="1" value8="4000" value0="0" value6="0" value1="0" value5="0" value3="0" type="event" value7="1000"/>
+<block name="statefilter" value2="2" value0="2" value1="1" value3="1" type="state"/>
+<block name="move" value0="-100" value1="-100" type="action"/>
+<block name="setstate" value2="1" value0="2" value1="2" value3="1" type="action"/>
+<block name="timer" value0="1500" type="action"/>
+</set>
+<set>
+<block name="timeout" type="event"/>
+<block name="statefilter" value2="1" value0="2" value1="2" value3="1" type="state"/>
+<block name="move" value0="0" value1="0" type="action"/>
+</set>
+<set>
+<block name="statefilter" value2="0" value0="0" value1="0" value3="0" type="state"/>
+</set>
+</program>
+</vplroot>
+</ThymioVisualProgramming>
+</toolsPlugins>
+</node>
+</network>
