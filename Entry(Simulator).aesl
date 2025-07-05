@@ -1,8 +1,8 @@
 <!DOCTYPE aesl-source>
 <network>
-<event name="pair_run" size="1"/>
-<event name="debug_log" size="14"/>
-<node nodeId="{3a62a583-b3d2-4dbb-8734-cdda994ea5cf}" name="USB Serial Device"># variables for state
+<event size="1" name="pair_run"/>
+<event size="14" name="debug_log"/>
+<node name="Thymio A3 on Jeff-PC - 13516" nodeId="{bb8c204b-d7ed-4095-84e0-98f24e25678f}"># variables for state
 var state[4] = [0,0,0,0]
 var new_state[4] = [0,0,0,0]
 
@@ -45,20 +45,20 @@ onevent sound.finished
 
 onevent prox
 	if state[0] == 0 and state[1] == 0 and state[2] == 0 and state[3] == 0 then
-		motor.left.target = -350
-		motor.right.target = 350
+		motor.left.target = -300
+		motor.right.target = 250
 		timer.period[0] = 750
 		new_state[0] = 1
 		new_state[1] = 0
 		new_state[2] = 0
 		new_state[3] = 0
 		emit pair_run 0
-		_emit debug_log [0, 0x5, 0xc872, 0xd0, 0, 0x3e8, 0x7d0, 0x50, 0x311, 0x2ee, 0x35]
+		_emit debug_log [0, 0x5, 0xc872, 0xd0, 0, 0x3e8, 0x7d0, 0x50, 0x40f, 0x2ee, 0x35]
 	end
 
 	when prox.ground.delta[0] &lt;= 400 and prox.ground.delta[1] &lt;= 400 do
 		if state[0] == 1 and state[1] == 1 and state[2] == 1 and state[3] == 0 then
-			motor.left.target = 300
+			motor.left.target = 350
 			motor.right.target = 150
 			timer.period[0] = 1000
 			new_state[0] = 1
@@ -66,7 +66,7 @@ onevent prox
 			new_state[2] = 1
 			new_state[3] = 0
 			emit pair_run 3
-			_emit debug_log [0x3, 0x5, 0xc873, 0xd0, 0xa, 0x190, 0x1c2, 0x29, 0x100d, 0x3e8, 0x32]
+			_emit debug_log [0x3, 0x5, 0xc873, 0xd0, 0xa, 0x190, 0x1c2, 0x29, 0x110d, 0x3e8, 0x32]
 		end
 	end
 
@@ -206,89 +206,89 @@ onevent timer0
 <vplroot xml-format-version="1">
 <program advanced_mode="1">
 <set>
-<block value1="0" value4="0" name="prox" value7="1000" value3="0" value5="0" value6="0" value0="0" type="event" value8="2000" value2="0"/>
-<block value1="2" name="statefilter" value3="2" value0="2" type="state" value2="2"/>
-<block value1="350" name="move" value0="-350" type="action"/>
-<block name="timer" value0="750" type="action"/>
-<block value1="2" name="setstate" value3="2" value0="1" type="action" value2="2"/>
+<block type="event" value6="0" value4="0" value5="0" value7="1000" name="prox" value3="0" value2="0" value0="0" value1="0" value8="2000"/>
+<block type="state" name="statefilter" value3="2" value2="2" value0="2" value1="2"/>
+<block type="action" name="move" value0="-300" value1="250"/>
+<block type="action" name="timer" value0="750"/>
+<block type="action" name="setstate" value3="2" value2="2" value0="1" value1="2"/>
 </set>
 <set>
-<block name="timeout" type="event"/>
-<block value1="2" name="statefilter" value3="2" value0="1" type="state" value2="2"/>
-<block value1="0" name="move" value0="0" type="action"/>
-<block name="timer" value0="250" type="action"/>
-<block value1="1" name="setstate" value3="2" value0="1" type="action" value2="2"/>
+<block type="event" name="timeout"/>
+<block type="state" name="statefilter" value3="2" value2="2" value0="1" value1="2"/>
+<block type="action" name="move" value0="0" value1="0"/>
+<block type="action" name="timer" value0="250"/>
+<block type="action" name="setstate" value3="2" value2="2" value0="1" value1="1"/>
 </set>
 <set>
-<block name="timeout" type="event"/>
-<block value1="1" name="statefilter" value3="2" value0="1" type="state" value2="2"/>
-<block value1="250" name="move" value0="250" type="action"/>
-<block value1="1" name="setstate" value3="2" value0="1" type="action" value2="1"/>
+<block type="event" name="timeout"/>
+<block type="state" name="statefilter" value3="2" value2="2" value0="1" value1="1"/>
+<block type="action" name="move" value0="250" value1="250"/>
+<block type="action" name="setstate" value3="2" value2="1" value0="1" value1="1"/>
 </set>
 <set>
-<block value1="2" name="proxground" value3="450" value0="2" type="event" value2="400"/>
-<block value1="1" name="statefilter" value3="2" value0="1" type="state" value2="1"/>
-<block value1="150" name="move" value0="300" type="action"/>
-<block name="timer" value0="1000" type="action"/>
-<block value1="2" name="setstate" value3="2" value0="1" type="action" value2="1"/>
+<block type="event" name="proxground" value3="450" value2="400" value0="2" value1="2"/>
+<block type="state" name="statefilter" value3="2" value2="1" value0="1" value1="1"/>
+<block type="action" name="move" value0="350" value1="150"/>
+<block type="action" name="timer" value0="1000"/>
+<block type="action" name="setstate" value3="2" value2="1" value0="1" value1="2"/>
 </set>
 <set>
-<block name="timeout" type="event"/>
-<block value1="2" name="statefilter" value3="2" value0="1" type="state" value2="1"/>
-<block value1="-100" name="move" value0="100" type="action"/>
-<block name="timer" value0="1000" type="action"/>
-<block value1="2" name="setstate" value3="2" value0="2" type="action" value2="1"/>
+<block type="event" name="timeout"/>
+<block type="state" name="statefilter" value3="2" value2="1" value0="1" value1="2"/>
+<block type="action" name="move" value0="100" value1="-100"/>
+<block type="action" name="timer" value0="1000"/>
+<block type="action" name="setstate" value3="2" value2="1" value0="2" value1="2"/>
 </set>
 <set>
-<block name="timeout" type="event"/>
-<block value1="2" name="statefilter" value3="2" value0="2" type="state" value2="1"/>
-<block value1="200" name="move" value0="200" type="action"/>
-<block name="timer" value0="750" type="action"/>
-<block value1="1" name="setstate" value3="2" value0="2" type="action" value2="1"/>
+<block type="event" name="timeout"/>
+<block type="state" name="statefilter" value3="2" value2="1" value0="2" value1="2"/>
+<block type="action" name="move" value0="200" value1="200"/>
+<block type="action" name="timer" value0="750"/>
+<block type="action" name="setstate" value3="2" value2="1" value0="2" value1="1"/>
 </set>
 <set>
-<block value1="2" name="proxground" value3="450" value0="1" type="event" value2="400"/>
-<block value1="1" name="statefilter" value3="2" value0="2" type="state" value2="1"/>
-<block value1="-150" name="move" value0="500" type="action"/>
+<block type="event" name="proxground" value3="450" value2="400" value0="1" value1="2"/>
+<block type="state" name="statefilter" value3="2" value2="1" value0="2" value1="1"/>
+<block type="action" name="move" value0="500" value1="-150"/>
 </set>
 <set>
-<block value1="1" name="proxground" value3="450" value0="1" type="event" value2="400"/>
-<block value1="1" name="statefilter" value3="2" value0="2" type="state" value2="1"/>
-<block value1="-500" name="move" value0="500" type="action"/>
+<block type="event" name="proxground" value3="450" value2="400" value0="1" value1="1"/>
+<block type="state" name="statefilter" value3="2" value2="1" value0="2" value1="1"/>
+<block type="action" name="move" value0="500" value1="-500"/>
 </set>
 <set>
-<block value1="2" name="proxground" value3="450" value0="2" type="event" value2="400"/>
-<block value1="1" name="statefilter" value3="2" value0="2" type="state" value2="1"/>
-<block value1="350" name="move" value0="500" type="action"/>
+<block type="event" name="proxground" value3="450" value2="400" value0="2" value1="2"/>
+<block type="state" name="statefilter" value3="2" value2="1" value0="2" value1="1"/>
+<block type="action" name="move" value0="500" value1="350"/>
 </set>
 <set>
-<block value1="1" name="proxground" value3="450" value0="2" type="event" value2="400"/>
-<block value1="1" name="statefilter" value3="2" value0="2" type="state" value2="1"/>
-<block value1="200" name="move" value0="-50" type="action"/>
+<block type="event" name="proxground" value3="450" value2="400" value0="2" value1="1"/>
+<block type="state" name="statefilter" value3="2" value2="1" value0="2" value1="1"/>
+<block type="action" name="move" value0="-50" value1="200"/>
 </set>
 <set>
-<block value1="0" value4="0" name="prox" value7="1000" value3="0" value5="0" value6="0" value0="0" type="event" value8="2000" value2="1"/>
-<block value1="1" name="statefilter" value3="2" value0="2" type="state" value2="1"/>
-<block value1="350" name="move" value0="-350" type="action"/>
-<block name="timer" value0="500" type="action"/>
-<block value1="2" name="setstate" value3="1" value0="2" type="action" value2="2"/>
+<block type="event" value6="0" value4="0" value5="0" value7="1000" name="prox" value3="0" value2="1" value0="0" value1="0" value8="2000"/>
+<block type="state" name="statefilter" value3="2" value2="1" value0="2" value1="1"/>
+<block type="action" name="move" value0="-350" value1="350"/>
+<block type="action" name="timer" value0="500"/>
+<block type="action" name="setstate" value3="1" value2="2" value0="2" value1="2"/>
 </set>
 <set>
-<block name="timeout" type="event"/>
-<block value1="2" name="statefilter" value3="1" value0="2" type="state" value2="2"/>
-<block value1="300" name="move" value0="300" type="action"/>
-<block name="timer" value0="2000" type="action"/>
-<block value1="1" name="setstate" value3="1" value0="1" type="action" value2="1"/>
+<block type="event" name="timeout"/>
+<block type="state" name="statefilter" value3="1" value2="2" value0="2" value1="2"/>
+<block type="action" name="move" value0="300" value1="300"/>
+<block type="action" name="timer" value0="2000"/>
+<block type="action" name="setstate" value3="1" value2="1" value0="1" value1="1"/>
 </set>
 <set>
-<block name="timeout" type="event"/>
-<block value1="1" name="statefilter" value3="1" value0="1" type="state" value2="1"/>
-<block value1="0" name="colortop" value0="32" type="action" value2="0"/>
-<block value1="260" value4="257" name="sound" value3="258" value5="514" value0="259" type="action" value2="515"/>
-<block value1="-500" name="move" value0="500" type="action"/>
+<block type="event" name="timeout"/>
+<block type="state" name="statefilter" value3="1" value2="1" value0="1" value1="1"/>
+<block type="action" name="colortop" value2="0" value0="32" value1="0"/>
+<block type="action" value4="257" value5="514" name="sound" value3="258" value2="515" value0="259" value1="260"/>
+<block type="action" name="move" value0="500" value1="-500"/>
 </set>
 <set>
-<block value1="0" name="statefilter" value3="0" value0="0" type="state" value2="0"/>
+<block type="state" name="statefilter" value3="0" value2="0" value0="0" value1="0"/>
 </set>
 </program>
 </vplroot>
