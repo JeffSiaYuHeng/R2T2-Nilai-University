@@ -1,0 +1,95 @@
+<!DOCTYPE aesl-source>
+<network>
+<node><toolsPlugins>
+<ThymioVisualProgramming>
+<vplroot xml-format-version="1">
+<program advanced_mode="1">
+<set>
+<block name="prox" value3="0" value4="0" value7="1000" value0="0" value5="0" type="event" value8="2000" value2="0" value6="0" value1="0"/>
+<block name="statefilter" value3="2" value0="2" type="state" value2="2" value1="2"/>
+<block name="move" value0="-300" type="action" value1="250"/>
+<block name="timer" value0="750" type="action"/>
+<block name="setstate" value3="2" value0="1" type="action" value2="2" value1="2"/>
+</set>
+<set>
+<block name="timeout" type="event"/>
+<block name="statefilter" value3="2" value0="1" type="state" value2="2" value1="2"/>
+<block name="move" value0="0" type="action" value1="0"/>
+<block name="timer" value0="250" type="action"/>
+<block name="setstate" value3="2" value0="1" type="action" value2="2" value1="1"/>
+</set>
+<set>
+<block name="timeout" type="event"/>
+<block name="statefilter" value3="2" value0="1" type="state" value2="2" value1="1"/>
+<block name="move" value0="250" type="action" value1="250"/>
+<block name="setstate" value3="2" value0="1" type="action" value2="1" value1="1"/>
+</set>
+<set>
+<block name="proxground" value3="450" value0="2" type="event" value2="400" value1="2"/>
+<block name="statefilter" value3="2" value0="1" type="state" value2="1" value1="1"/>
+<block name="move" value0="350" type="action" value1="150"/>
+<block name="timer" value0="1000" type="action"/>
+<block name="setstate" value3="2" value0="1" type="action" value2="1" value1="2"/>
+</set>
+<set>
+<block name="timeout" type="event"/>
+<block name="statefilter" value3="2" value0="1" type="state" value2="1" value1="2"/>
+<block name="move" value0="100" type="action" value1="-100"/>
+<block name="timer" value0="1000" type="action"/>
+<block name="setstate" value3="2" value0="2" type="action" value2="1" value1="2"/>
+</set>
+<set>
+<block name="timeout" type="event"/>
+<block name="statefilter" value3="2" value0="2" type="state" value2="1" value1="2"/>
+<block name="move" value0="200" type="action" value1="200"/>
+<block name="timer" value0="750" type="action"/>
+<block name="setstate" value3="2" value0="2" type="action" value2="1" value1="1"/>
+</set>
+<set>
+<block name="proxground" value3="450" value0="1" type="event" value2="400" value1="2"/>
+<block name="statefilter" value3="2" value0="2" type="state" value2="1" value1="1"/>
+<block name="move" value0="500" type="action" value1="-150"/>
+</set>
+<set>
+<block name="proxground" value3="450" value0="1" type="event" value2="400" value1="1"/>
+<block name="statefilter" value3="2" value0="2" type="state" value2="1" value1="1"/>
+<block name="move" value0="500" type="action" value1="-500"/>
+</set>
+<set>
+<block name="proxground" value3="450" value0="2" type="event" value2="400" value1="2"/>
+<block name="statefilter" value3="2" value0="2" type="state" value2="1" value1="1"/>
+<block name="move" value0="500" type="action" value1="350"/>
+</set>
+<set>
+<block name="proxground" value3="450" value0="2" type="event" value2="400" value1="1"/>
+<block name="statefilter" value3="2" value0="2" type="state" value2="1" value1="1"/>
+<block name="move" value0="-50" type="action" value1="200"/>
+</set>
+<set>
+<block name="prox" value3="0" value4="0" value7="1000" value0="0" value5="0" type="event" value8="2000" value2="1" value6="0" value1="0"/>
+<block name="statefilter" value3="2" value0="2" type="state" value2="1" value1="1"/>
+<block name="move" value0="-350" type="action" value1="350"/>
+<block name="timer" value0="500" type="action"/>
+<block name="setstate" value3="1" value0="2" type="action" value2="2" value1="2"/>
+</set>
+<set>
+<block name="timeout" type="event"/>
+<block name="statefilter" value3="1" value0="2" type="state" value2="2" value1="2"/>
+<block name="move" value0="300" type="action" value1="300"/>
+<block name="timer" value0="2250" type="action"/>
+<block name="setstate" value3="1" value0="1" type="action" value2="1" value1="1"/>
+</set>
+<set>
+<block name="timeout" type="event"/>
+<block name="statefilter" value3="1" value0="1" type="state" value2="1" value1="1"/>
+<block name="move" value0="0" type="action" value1="0"/>
+</set>
+<set>
+<block name="statefilter" value3="0" value0="0" type="state" value2="0" value1="0"/>
+</set>
+</program>
+</vplroot>
+</ThymioVisualProgramming>
+</toolsPlugins>
+</node>
+</network>
